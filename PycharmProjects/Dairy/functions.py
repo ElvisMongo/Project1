@@ -84,27 +84,27 @@ def show_menu():
 
 
 def main1(connection):
+    with connection as conn:
+        commands = {
+            '1': add_task,
+            '2': show_tasks_list,
+            '3': correct_task,
+            '4': complete_task,
+            '5': begin_task_again,
+            '6': action_exit
+        }
 
-    commands = {
-        '1': add_task,
-        '2': show_tasks_list,
-        '3': correct_task,
-        '4': complete_task,
-        '5': begin_task_again,
-        '6': action_exit
-    }
+        while 1:
 
-    while 1:
+            show_menu()
 
-        show_menu()
+            id_action = input('Выберите действие: ')
+            action = commands.get(id_action)
 
-        id_action = input('Выберите действие: ')
-        action = commands.get(id_action)
-
-        if action:
-            action(connection)
-        else:
-            print('Неизвестная команда')
+            if action:
+                action(conn)
+            else:
+                print('Неизвестная команда')
 
 
 def add_task(connection):
